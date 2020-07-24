@@ -1,2 +1,2 @@
-# ruby-sample
-ruby-sample
+# jsp-web
+jsp-web
