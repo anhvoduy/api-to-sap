@@ -1,2 +1,2 @@
-# jsp-web
-jsp-web
+# demo-jsp
+demo-jsp
