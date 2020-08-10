@@ -10,6 +10,8 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using NetCoreToSap.Utilities;
+using SAP.Middleware.Connector;
 
 namespace NetCoreToSap
 {
@@ -26,6 +28,21 @@ namespace NetCoreToSap
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
+
+            string destinationConfigName = "QA";
+            IDestinationConfiguration destinationConfig = null;
+            bool destinationIsInialised = false;
+            if(!destinationIsInialised)
+            {
+                destinationConfig = new SAPDestinationConfig();
+                destinationConfig.GetParameters(destinationConfigName);
+                
+                if(RfcDestinationManager.GetDestination(destinationConfigName) == null)
+                {
+                    RfcDestinationManager.RegisterDestinationConfiguration(destinationConfig);
+                    destinationIsInialised = true;
+                }
+            }
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

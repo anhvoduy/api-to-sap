@@ -1,6 +1,6 @@
 using System;
 
-namespace NetCoreToSap
+namespace NetCoreToSap.Models
 {
     public class WeatherForecast
     {
