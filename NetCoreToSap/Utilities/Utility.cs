@@ -21,4 +21,11 @@ namespace NetCoreToSap.Utilities
         public const string CONNECTED = "{0} connected";
         public const string NOTCONNECTED = "{0} not connected";
     }
+
+    public static class ExceptionConstant
+    {
+        public const string INVALID_REQUEST = "INVALID_REQUEST";
+        public const string INVALID_REQUIRED_FIELD_ID = "INVALID_REQUIRED_FIELD_ID";
+        public const string CAN_NOT_CONNECT_TO_SAP_LOGIN = "CAN_NOT_CONNECT_TO_SAP_LOGIN";
+    }
 }

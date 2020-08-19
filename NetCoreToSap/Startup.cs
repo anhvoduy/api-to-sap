@@ -46,6 +46,9 @@ namespace NetCoreToSap
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
+                endpoints.MapControllerRoute(
+                    name: "default",
+                    pattern: "{controller=status}/{action=Index}");
             });
         }
     }
