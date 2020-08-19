@@ -22,5 +22,11 @@
         {
             return Ok(HandleResponse());
         }
+
+        [HttpPost]
+        public IActionResult SAPLogin()
+        {
+            return Ok(HandleResponse());
+        }
     }
 }
