@@ -16,10 +16,13 @@ namespace NetCoreToSap.Models
             Password = password;
         }
 
+        [JsonProperty("CompanyDB")]
         public string CompanyDB { get; set; }
-        
+
+        [JsonProperty("UserName")]
         public string UserName { get; set; }
 
+        [JsonProperty("Password")]
         public string Password { get; set; }
     }
 }
