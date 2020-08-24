@@ -8,11 +8,10 @@
     using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.Extensions.Configuration;
-    //using Newtonsoft.Json;
-    using System.Text.Json;
-    using System.Text.Json.Serialization;    
+    using Newtonsoft.Json;
     using NetCoreToSap.Utilities;
     using NetCoreToSap.Models;
+    using System.ComponentModel;    
 
     [ApiController]
     [Route("api/[controller]")]    
@@ -43,8 +42,8 @@
                 WebRequest request = WebRequest.Create(url);
 
                 request.Method = "POST";
-                var sapLoginModel = new SapLoginModel("SBODemoAU", "manager", "manager");
-                string postData = JsonSerializer.Serialize(sapLoginModel);
+                var sapLoginModel = new SapLoginRequest("SBODemoAU", "manager", "manager");
+                string postData = JsonConvert.SerializeObject(sapLoginModel);
                 byte[] byteArray = Encoding.UTF8.GetBytes(postData);
 
                 request.ContentType = "application/x-www-form-urlencoded";
@@ -78,7 +77,7 @@
 
                 // Close the response.
                 response.Close();
-                var data = JsonSerializer.Serialize(responseFromServer);
+                var data = JsonConvert.DeserializeObject<SapLoginResponse>(responseFromServer);
                 return Ok(HandleResponse(data));
             }
             catch (Exception ex)

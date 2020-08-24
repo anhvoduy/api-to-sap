@@ -2,14 +2,14 @@
 
 namespace NetCoreToSap.Models
 {
-    public class SapLoginModel
+    public class SapLoginRequest
     {
-        public SapLoginModel()
+        public SapLoginRequest()
         {
 
         }
 
-        public SapLoginModel(string companydb, string username, string password)
+        public SapLoginRequest(string companydb, string username, string password)
         {
             CompanyDB = companydb;
             UserName = username;
