@@ -38,9 +38,10 @@
             try
             {
                 /* https://docs.microsoft.com/en-us/dotnet/framework/network-programming/how-to-send-data-using-the-webrequest-class */
-                WebRequest request = WebRequest.Create(Utility.SAPLoginUrl);
+                var util = new Utility(_config);
+                WebRequest request = WebRequest.Create(util.SAPLoginUrl);
                 request.Method = "POST";
-                var sapLoginModel = new SapLoginRequest(Utility.CompanyDB, Utility.UserName, Utility.Password);
+                var sapLoginModel = new SapLoginRequest(util.SAPCompanyDB, util.SAPUserName, util.SAPPassword);
                 string postData = JsonConvert.SerializeObject(sapLoginModel);
                 byte[] byteArray = Encoding.UTF8.GetBytes(postData);
 

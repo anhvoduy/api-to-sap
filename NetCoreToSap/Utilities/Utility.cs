@@ -6,37 +6,49 @@ using Microsoft.Extensions.Configuration;
 
 namespace NetCoreToSap.Utilities
 {
-    public static class Utility
+    public class Utility
     {
+        private readonly IConfiguration _config;
+
+        public Utility(IConfiguration configuration)
+        {
+            _config = configuration;
+        }
+
         public const string inventoryKey = "inventoryKey";
 
         public const string MyConnectionString = "MyConnectionString";
 
         public const string DateFormatString = "yyyy-MM-dd";
 
-        public const string SAPLoginUrl = "https://sap-10:50000/b1s/v1/Login";
-
-        public static string CompanyDB
-        {
+        public string SAPLoginUrl {
             get
             {
-                return "SBODemoAU";
+                return _config["SAP_LoginUrl"];
             }
         }
 
-        public static string UserName
+        public string SAPCompanyDB
         {
             get
-            {
-                return "manager";
+            {                
+                return _config["SAP_CompanyDB"];
             }
         }
 
-        public static string Password
+        public string SAPUserName
         {
             get
             {
-                return "manager";
+                return _config["SAP_UserName"];
+            }
+        }
+
+        public string SAPPassword
+        {
+            get
+            {
+                return _config["SAP_Password"];
             }
         }
     }
