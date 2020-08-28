@@ -96,6 +96,7 @@
                 var util = new Utility(_config);
                 WebRequest request = WebRequest.Create(util.SAPItemsUrl);
                 request.Method = "GET";
+                request.Headers.Add("Cookie", "B1SESSION=39234738-e91c-11ea-8000-00155d04ee00"); // TO DO review cookies
 
                 // Get the response.
                 WebResponse response = request.GetResponse();
@@ -117,7 +118,7 @@
 
                 // Close the response.
                 response.Close();
-                var data = JsonConvert.DeserializeObject<SapLoginResponse>(responseFromServer);
+                var data = JsonConvert.DeserializeObject<SapItemsResponse>(responseFromServer);
                 return Ok(HandleResponse(data));
             }
             catch (Exception ex)

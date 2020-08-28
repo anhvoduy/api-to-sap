@@ -30,4 +30,17 @@
         [JsonProperty("Amount", DefaultValueHandling = DefaultValueHandling.Populate)]
         public decimal Amount { get; set; }
     }
+
+    public class SapItemsResponse
+    {
+        public SapItemsResponse()
+        {
+        }
+
+        [JsonProperty("odata.metadata")]
+        public string OdataMetadata { get; set; }
+
+        [JsonProperty("value")]
+        public List<object> Value { get; set; }
+    }
 }
