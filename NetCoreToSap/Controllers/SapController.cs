@@ -3,8 +3,10 @@
     using System;
     using System.IO;
     using System.Net;
-    using System.Text;    
+    using System.Text;
     using System.Threading.Tasks;
+    using System.Collections.Generic;
+    using System.Linq;    
     using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.Extensions.Configuration;
@@ -13,28 +15,28 @@
     using NetCoreToSap.Models;
     using System.ComponentModel;
 
+    [Route("api/[controller]")]
     [ApiController]
-    [Route("api/[controller]")]    
-    public class StatusController : BaseController
+    public class SapController : BaseController
     {
         private readonly IConfiguration _config;
 
-        public StatusController(IConfiguration config)
+        public SapController(IConfiguration config)
         {
             _config = config;
         }
 
-        // GET api/status
+        // GET api/sap
         [HttpGet]
         public IActionResult Status()
         {
             return Ok(HandleResponse());
-        }        
+        }
 
-        // POST api/status/loginsap
-        [HttpPost("loginsap")]
-        public IActionResult LoginSAP()
-        {            
+        // POST api/sap/login
+        [HttpPost("login")]
+        public IActionResult SAPLogin()
+        {
             try
             {
                 /* https://docs.microsoft.com/en-us/dotnet/framework/network-programming/how-to-send-data-using-the-webrequest-class */
@@ -82,6 +84,46 @@
             catch (Exception ex)
             {
                 throw new Exception(ExceptionConstant.CAN_NOT_CONNECT_TO_SAP_LOGIN, ex);
+            }
+        }
+
+        // GET api/sap/items
+        [HttpGet("items")]
+        public IActionResult Items()
+        {
+            try
+            {
+                var util = new Utility(_config);
+                WebRequest request = WebRequest.Create(util.SAPItemsUrl);
+                request.Method = "GET";
+                request.Headers.Add("Cookie", "B1SESSION=39234738-e91c-11ea-8000-00155d04ee00"); // TO DO review cookies
+
+                // Get the response.
+                WebResponse response = request.GetResponse();
+                // Display the status.
+                Console.WriteLine(((HttpWebResponse)response).StatusDescription);
+
+                // Get the stream containing content returned by the server.
+                // The using block ensures the stream is automatically closed.
+                var responseFromServer = "";
+                using (var  dataStream = response.GetResponseStream())
+                {
+                    // Open the stream using a StreamReader for easy access.
+                    StreamReader reader = new StreamReader(dataStream);
+                    // Read the content.
+                    responseFromServer = reader.ReadToEnd();
+                    // Display the content.
+                    Console.WriteLine(responseFromServer);
+                }
+
+                // Close the response.
+                response.Close();
+                var data = JsonConvert.DeserializeObject<SapItemsResponse>(responseFromServer);
+                return Ok(HandleResponse(data));
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ExceptionConstant.CAN_NOT_REQUEST_TO_SAP_ITEMS, ex);
             }
         }
     }

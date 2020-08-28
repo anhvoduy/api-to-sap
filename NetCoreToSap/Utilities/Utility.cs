@@ -28,6 +28,14 @@ namespace NetCoreToSap.Utilities
             }
         }
 
+        public string SAPItemsUrl
+        {
+            get
+            {
+                return _config["SAP_ItemsUrl"];
+            }
+        }
+
         public string SAPCompanyDB
         {
             get
@@ -66,5 +74,6 @@ namespace NetCoreToSap.Utilities
         public const string INVALID_REQUEST = "INVALID_REQUEST";
         public const string INVALID_REQUIRED_FIELD_ID = "INVALID_REQUIRED_FIELD_ID";
         public const string CAN_NOT_CONNECT_TO_SAP_LOGIN = "CAN_NOT_CONNECT_TO_SAP_LOGIN";
+        public const string CAN_NOT_REQUEST_TO_SAP_ITEMS = "CAN_NOT_REQUEST_TO_SAP_ITEMS";
     }
 }
